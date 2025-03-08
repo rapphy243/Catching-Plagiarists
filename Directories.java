@@ -41,12 +41,23 @@ public class Directories
         }
         return files;
     }
+    
+    public static List<String> getPathOfFileNames(NumDocs size, List<String> files)
+    {
+        List<String> filePaths = new ArrayList<String>();
+        for(int i = 0; i < files.size(); i++)
+        {
+            filePaths.add(directoryMap.get(size) + "/" + files.get(i));
+        }
+        return filePaths;
+    }
 
     public static void main(String[] args)
     {
         System.out.println("The available data sets are "); 
         System.out.println(directoryMap.get(NumDocs.SMALL));
         directoryLister(NumDocs.SMALL);
+        // System.out.println(getPathOfFileNames(NumDocs.SMALL, getFileNames(NumDocs.SMALL)));
         System.out.println(directoryMap.get(NumDocs.MEDIUM));
         directoryLister(NumDocs.MEDIUM);
         System.out.println(directoryMap.get(NumDocs.LARGE));
