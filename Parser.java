@@ -16,24 +16,26 @@ public class Parser
         // https://stackoverflow.com/questions/203984/how-do-i-remove-repeated-elements-from-arraylist
         //tldr use a hashset for no duplicates
         ArrayList<String> list = new ArrayList<String>();
-        parseFile(file, list, numWords);
+        parseFile(file, list, numWords, 0);
+        
         file = new Scanner(new File(path));
-        file.next();
-        parseFile(file, list, numWords);
+        parseFile(file, list, numWords, 1);
+        
         file = new Scanner(new File(path));
-        file.next();
-        file.next();
-        parseFile(file, list, numWords);
+        parseFile(file, list, numWords, 2);
+        
         file = new Scanner(new File(path));
-        file.next();
-        file.next();
-        file.next();
-        parseFile(file, list, numWords);
-        return list.stream().distinct().collect(Collectors.toList());
+        parseFile(file, list, numWords, 3);
+        
+        return list.stream().distinct().collect(Collectors.toList()); //TEMP: removes duplicates;
     }
     
-    public static void parseFile(Scanner file, List<String> list, int numWords) throws FileNotFoundException
+    public static void parseFile(Scanner file, List<String> list, int numWords, int skip) throws FileNotFoundException
     {
+        for (int i = 0; i < skip; i++)
+        {
+            file.next();
+        }
         while(file.hasNext())
         {
             String phrase = "";
@@ -75,9 +77,24 @@ public class Parser
         System.out.println("There are " + list.size() + " 4-word phrases.");
         System.out.println("=================");
         System.out.println("Testing Examples:");
-        System.out.print("[jrf1109.shtml.txt, sra31.shtml.txt] -> ");
-        System.out.println(getCommonPhrases(path + "/jrf1109.shtml.txt", path + "/sra31.shtml.txt").size());
-        System.out.print("[abf0704.shtml.txt, edo26.shtml.txt] -> ");
-        System.out.println(getCommonPhrases(path + "/abf0704.shtml.txt", path + "/edo26.shtml.txt").size());
+        EssayPair example = new EssayPair(NumDocs.SMALL, "jrf1109.shtml.txt", "sra31.shtml.txt");
+        System.out.print(example.toString() + " -> ");
+        System.out.println(example.getNumCommonPhrases());
+
+        example = new EssayPair(NumDocs.SMALL, "abf0704.shtml.txt", "edo26.shtml.txt");
+        System.out.print(example.toString() + " -> ");
+        System.out.println(example.getNumCommonPhrases());
+
+        example = new EssayPair(NumDocs.SMALL, "abf0704.shtml.txt", "abf70402.shtml.txt");
+        System.out.print(example.toString() + " -> ");
+        System.out.println(example.getNumCommonPhrases());
+
+        example = new EssayPair(NumDocs.SMALL, "abf70402.shtml.txt", "edo26.shtml.txt");
+        System.out.print(example.toString() + " -> ");
+        System.out.println(example.getNumCommonPhrases());
+
+        example = new EssayPair(NumDocs.SMALL, "abf0704.shtml.txt", "edo20.shtml.txt");
+        System.out.print(example.toString() + " -> ");
+        System.out.println(example.getNumCommonPhrases());
     }
 }
