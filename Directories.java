@@ -15,21 +15,6 @@ public class Directories
                 put(NumDocs.MEDIUM, "./Medium number of documents");
                 put(NumDocs.SMALL, "./Small number of documents");
             }};
-
-    public static void directoryLister(NumDocs size)
-    {
-        File dir = new File(directoryMap.get(size));
-        String[] temp = dir.list();
-        List<String> files = new ArrayList<String>();
-        for(int i = 0; i < temp.length; i++)
-        {
-            if(temp[i].endsWith(".txt"))
-            {
-                files.add(temp[i]);   
-            }
-        }
-        System.out.println(files);
-    }
     
     public static List<String> getFileNames(NumDocs size)
     {
@@ -44,6 +29,11 @@ public class Directories
             }
         }
         return files;
+    }
+    
+    public static void directoryLister(NumDocs size)
+    {
+        System.out.println(getFileNames(size));
     }
     
     public static List<String> getPathOfFileNames(NumDocs size, List<String> files)

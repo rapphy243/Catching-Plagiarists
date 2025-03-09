@@ -5,18 +5,27 @@
  * @author (your name)
  * @version (a version number or a date)
  */
-public class EssayPair
+public class EssayPair implements Comparable<EssayPair>
 {
     private NumDocs size;
 
     private String path1;
     private String path2;
+    
+    private int commonPhrases;
 
-    public EssayPair(NumDocs size, String path1, String path2)
-    {
+    public EssayPair(NumDocs size, String path1, String path2)    {
         this.size = size;
         this.path1 = path1;
         this.path2 = path2;
+        try
+        {
+            this.commonPhrases = Parser.getCommonPhrases(getFullPath1(), getFullPath2()).size();
+        }
+        catch (java.io.FileNotFoundException fnfe)
+        {
+            this.commonPhrases = -1;
+        }
     }
 
     public String getPath1()
@@ -39,13 +48,18 @@ public class EssayPair
         return Directories.directoryMap.get(this.size) + "/" + this.path2;
     }
 
-    public int getNumCommonPhrases() throws java.io.FileNotFoundException
+    public int getNumCommonPhrases()
     {
-        return  Parser.getCommonPhrases(getFullPath1(), getFullPath2()).size();
+        return this.commonPhrases;
     }
 
     public String toString()
     {
         return "[" + path1 + ", " + path2 + "]";
+    }
+    
+    public int compareTo(EssayPair other)
+    {
+        return this.commonPhrases - other.getNumCommonPhrases();
     }
 }

@@ -87,7 +87,7 @@ public class Parser
         System.out.println(parseFile(path + "/erk185.shtml.txt", 4));
         System.out.println("There are " + list.size() + " 4-word phrases.");
         System.out.println("=================");
-        System.out.println("Testing Examples:");
+        System.out.println("Testing Hardcoded Examples:");
         EssayPair example = new EssayPair(NumDocs.SMALL, "jrf1109.shtml.txt", "sra31.shtml.txt");
         System.out.print(example.toString() + " -> ");
         System.out.println(example.getNumCommonPhrases());
