@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.stream.Collectors;
 import java.io.*;
 
 /**
@@ -10,27 +9,23 @@ import java.io.*;
  */
 public class Parser
 {
-    public static List<String> parseFile(String path, int numWords) throws FileNotFoundException
+    public static Set<String> parseFile(String path, int numWords) throws FileNotFoundException
     {
         Scanner file = new Scanner(new File(path));
         // https://stackoverflow.com/questions/203984/how-do-i-remove-repeated-elements-from-arraylist
-        //tldr use a hashset for no duplicates
-        ArrayList<String> list = new ArrayList<String>();
-        parseFile(file, list, numWords, 0);
+        // tldr use a hashset for no duplicates
+        Set<String> set = new HashSet<String>();
         
-        file = new Scanner(new File(path));
-        parseFile(file, list, numWords, 1);
+        for (int i = 0; i < numWords; i++)
+        {
+            parseFile(set, file, numWords, i);
+            file = new Scanner(new File(path));            
+        }
         
-        file = new Scanner(new File(path));
-        parseFile(file, list, numWords, 2);
-        
-        file = new Scanner(new File(path));
-        parseFile(file, list, numWords, 3);
-        
-        return list.stream().distinct().collect(Collectors.toList()); //TEMP: removes duplicates;
+        return set;
     }
     
-    public static void parseFile(Scanner file, List<String> list, int numWords, int skip) throws FileNotFoundException
+    public static void parseFile(Set<String> set, Scanner file, int numWords, int skip) throws FileNotFoundException
     {
         for (int i = 0; i < skip; i++)
         {
@@ -54,24 +49,40 @@ public class Parser
             }
             if (phrase != null)
             {
-                list.add(phrase);
+                set.add(phrase);
             }
         }
     }
     
+    public static List<String> compareSets(Set set1, Set set2)
+    {
+        List<String> temp = new ArrayList<String>();
+        Iterator<String> it = set2.iterator();
+        
+        while (it.hasNext())
+        {
+            String tempStr = it.next();
+            if (set1.contains(tempStr))
+            {
+                temp.add(tempStr);
+            }
+        }
+        return temp;
+    }
+    
     public static List<String> getCommonPhrases(String path1, String path2) throws FileNotFoundException
     {
-        List<String> list1 = parseFile(path1, 4);
-        List<String> list2 = parseFile(path2, 4);
-        // https://stackoverflow.com/questions/5943330/common-elements-in-two-lists
-        list1.retainAll(list2);
-        return list1;
+        Set<String> set1 = parseFile(path1, 4);
+        
+        Set<String> set2 = parseFile(path2, 4);
+        
+        return compareSets(set1,set2);
     }
 
     public static void main(String[] args) throws FileNotFoundException
     {
         String path = Directories.directoryMap.get(NumDocs.SMALL);
-        List<String> list = parseFile(path + "/erk185.shtml.txt", 4);
+        Set<String> list = parseFile(path + "/erk185.shtml.txt", 4);
         System.out.println("Example word phrases from: " + path);
         System.out.println(parseFile(path + "/erk185.shtml.txt", 4));
         System.out.println("There are " + list.size() + " 4-word phrases.");

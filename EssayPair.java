@@ -12,15 +12,11 @@ public class EssayPair
     private String path1;
     private String path2;
 
-    private int numCommonPhrases;
-
-    public EssayPair(NumDocs size, String path1, String path2) throws java.io.FileNotFoundException
+    public EssayPair(NumDocs size, String path1, String path2)
     {
         this.size = size;
         this.path1 = path1;
         this.path2 = path2;
-
-        this.numCommonPhrases = Parser.getCommonPhrases(getFullPath1(), getFullPath2()).size();
     }
 
     public String getPath1()
@@ -43,9 +39,9 @@ public class EssayPair
         return Directories.directoryMap.get(this.size) + "/" + this.path2;
     }
 
-    public int getNumCommonPhrases()
+    public int getNumCommonPhrases() throws java.io.FileNotFoundException
     {
-        return this.numCommonPhrases;
+        return  Parser.getCommonPhrases(getFullPath1(), getFullPath2()).size();
     }
 
     public String toString()

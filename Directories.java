@@ -39,7 +39,9 @@ public class Directories
         for(int i = 0; i < temp.length; i++)
         {
             if(temp[i].endsWith(".txt"))
+            {
                 files.add(temp[i]);
+            }
         }
         return files;
     }
