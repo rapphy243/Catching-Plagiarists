@@ -9,17 +9,23 @@ import java.io.*;
  */
 public class Directories
 {
-    //https://stackoverflow.com/questions/35006135/initializing-a-dictionary-with-a-specific-set-of-data-cleanly-in-java
-    public static final Map<NumDocs, String> directoryMap = new HashMap<NumDocs, String>() {{
-                put(NumDocs.LARGE, "./Large number of documents");
-                put(NumDocs.MEDIUM, "./Medium number of documents");
-                put(NumDocs.SMALL, "./Small number of documents");
-            }};
-    
-    public static List<String> getFileNames(NumDocs size)
+    public static List<File> getDirectories()
     {
-        File dir = new File(directoryMap.get(size));
-        String[] temp = dir.list();
+        File dir = new File(".");
+        ArrayList<File> directories = new ArrayList<File>();
+        for(File folder : dir.listFiles())
+        {
+            if(folder.isDirectory())
+            {
+                directories.add(folder);
+            }
+        }
+        return directories;
+    }
+
+    public static List<String> getFileNames(File file)
+    {
+        String[] temp = file.list();
         List<String> files = new ArrayList<String>();
         for(int i = 0; i < temp.length; i++)
         {
@@ -30,18 +36,18 @@ public class Directories
         }
         return files;
     }
-    
-    public static void directoryLister(NumDocs size)
+
+    public static void directoryLister(File folder)
     {
-        System.out.println(getFileNames(size));
+        System.out.println(getFileNames(folder));
     }
-    
-    public static List<String> getPathOfFileNames(NumDocs size, List<String> files)
+
+    public static List<String> getPathOfFileNames(File folder, List<String> files)
     {
         List<String> filePaths = new ArrayList<String>();
         for(int i = 0; i < files.size(); i++)
         {
-            filePaths.add(directoryMap.get(size) + "/" + files.get(i));
+            filePaths.add(folder + "\\" + files.get(i));
         }
         return filePaths;
     }
@@ -49,17 +55,17 @@ public class Directories
     public static void main(String[] args)
     {
         System.out.println("The available data sets are ");
-        NumDocs size = NumDocs.SMALL;
-        System.out.println(directoryMap.get(size));
-        directoryLister(size);
-        // System.out.println(getPathOfFileNames(size, getFileNames(size)));
-        size = NumDocs.MEDIUM;
-        System.out.println(directoryMap.get(size));
-        directoryLister(size);
-        // System.out.println(getPathOfFileNames(size, getFileNames(size)));
-        size = NumDocs.LARGE;
-        System.out.println(directoryMap.get(size));
-        directoryLister(size);
-        // System.out.println(getPathOfFileNames(size, getFileNames(size)));
+        File dir = new File("./Small number of documents");
+        System.out.println(dir);
+        directoryLister(dir);
+        System.out.println(getPathOfFileNames(dir, getFileNames(dir)));
+        dir = new File("./Medium number of documents");
+        System.out.println(dir);
+        directoryLister(dir);
+        System.out.println(getPathOfFileNames(dir, getFileNames(dir)));
+        dir = new File("./Large number of documents");
+        System.out.println(dir);
+        directoryLister(dir);
+        System.out.println(getPathOfFileNames(dir, getFileNames(dir)));
     }
 }

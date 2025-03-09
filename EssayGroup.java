@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 /**
  * Write a description of class EssayGroup here.
@@ -10,7 +11,7 @@ public class EssayGroup
 {
     List<EssayPair> list;
     
-    public EssayGroup(NumDocs size, List<String> listOfFiles) // List of file paths
+    public EssayGroup(File folder, List<String> listOfFiles) // List of file paths
     {
         this.list = new ArrayList<EssayPair>();
         for (int i = 0; i < listOfFiles.size(); i++)
@@ -18,7 +19,7 @@ public class EssayGroup
             String tempStr = listOfFiles.get(i);
             for (int x = i + 1; x < listOfFiles.size(); x++)
             {
-                EssayPair pair = new EssayPair(size, tempStr, listOfFiles.get(x));
+                EssayPair pair = new EssayPair(folder, tempStr, listOfFiles.get(x));
                 this.list.add(pair);
             }
         }
@@ -36,13 +37,29 @@ public class EssayGroup
         }
     }
     
+    public void print(int results)
+    {
+        System.out.println("=================");
+        System.out.println("Printing Examples:");
+        for (int i = 0; i < results; i++)
+        {
+            System.out.print(list.get(i).toString() + " -> ");
+            System.out.println(list.get(i).getNumCommonPhrases());
+        }
+    }
+    
     public static void main(String[] args)
     {
-        EssayGroup example = new EssayGroup(NumDocs.SMALL, Directories.getFileNames(NumDocs.SMALL));
-        example.print();
-        //EssayGroup example = new EssayGroup(NumDocs.MEDIUM, Directories.getFileNames(NumDocs.MEDIUM));
+        File folder = new File("./Small number of documents");
+        EssayGroup example = new EssayGroup(folder, Directories.getFileNames(folder));
         //example.print();
-        //EssayGroup example = new EssayGroup(NumDocs.LARGE, Directories.getFileNames(NumDocs.LARGE));
+        
+        //folder = new File("./Medium number of documents");
+        //example = new EssayGroup(folder, Directories.getFileNames(folder));
         //example.print();
+        
+        folder = new File("./Large number of documents");
+        example = new EssayGroup(folder, Directories.getFileNames(folder));
+        example.print(20);
     }
 }

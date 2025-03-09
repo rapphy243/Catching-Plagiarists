@@ -12,19 +12,36 @@ public class Parser
     public static Set<String> parseFile(String path, int numWords) throws FileNotFoundException
     {
         Scanner file = new Scanner(new File(path));
-        // https://stackoverflow.com/questions/203984/how-do-i-remove-repeated-elements-from-arraylist
-        // tldr use a hashset for no duplicates
-        Set<String> set = new HashSet<String>();
+
+        List<String> wordList = new ArrayList<>();
         
-        for (int i = 0; i < numWords; i++)
+        while (file.hasNext()) 
         {
-            parseFile(set, file, numWords, i);
-            file = new Scanner(new File(path));            
+            wordList.add(file.next().replaceAll("[^A-z]", "").toLowerCase());
         }
         
+        // https://stackoverflow.com/questions/203984/how-do-i-remove-repeated-elements-from-arraylist
+        // tldr use a hashset for no duplicates
+        Set<String> set = new HashSet<>();
+
+        for (int i = 0; i < numWords; i++) 
+        {
+            for (int x = i; x <= wordList.size() - numWords; x += numWords) 
+            {
+                String phrase = "";
+
+                for (int j = 0; j < numWords; j++) 
+                {
+                    phrase += wordList.get(x + j);
+                }
+
+                set.add(phrase);
+            }
+        }
+
         return set;
     }
-    
+
     public static void parseFile(Set<String> set, Scanner file, int numWords, int skip) throws FileNotFoundException
     {
         for (int i = 0; i < skip; i++)
@@ -53,58 +70,48 @@ public class Parser
             }
         }
     }
-    
-    public static List<String> compareSets(Set set1, Set set2)
+
+    public static List<String> compareSets(Set<String> set1, Set<String> set2)
     {
-        List<String> temp = new ArrayList<String>();
-        Iterator<String> it = set2.iterator();
-        
-        while (it.hasNext())
-        {
-            String tempStr = it.next();
-            if (set1.contains(tempStr))
-            {
-                temp.add(tempStr);
-            }
-        }
-        return temp;
+        set1.retainAll(set2);
+        return new ArrayList<String>(List.copyOf(set1));
     }
-    
+
     public static List<String> getCommonPhrases(String path1, String path2) throws FileNotFoundException
     {
         Set<String> set1 = parseFile(path1, 4);
-        
+
         Set<String> set2 = parseFile(path2, 4);
-        
+
         return compareSets(set1,set2);
     }
 
     public static void main(String[] args) throws FileNotFoundException
     {
-        String path = Directories.directoryMap.get(NumDocs.SMALL);
-        Set<String> list = parseFile(path + "/erk185.shtml.txt", 4);
-        System.out.println("Example word phrases from: " + path);
-        System.out.println(parseFile(path + "/erk185.shtml.txt", 4));
+        File file = new File("./Small number of documents");
+        Set<String> list = parseFile(file + "/erk185.shtml.txt", 4);
+        System.out.println("Example word phrases from: " + file);
+        System.out.println(parseFile(file + "/erk185.shtml.txt", 4));
         System.out.println("There are " + list.size() + " 4-word phrases.");
         System.out.println("=================");
         System.out.println("Testing Hardcoded Examples:");
-        EssayPair example = new EssayPair(NumDocs.SMALL, "jrf1109.shtml.txt", "sra31.shtml.txt");
+        EssayPair example = new EssayPair(file, "jrf1109.shtml.txt", "sra31.shtml.txt");
         System.out.print(example.toString() + " -> ");
         System.out.println(example.getNumCommonPhrases());
 
-        example = new EssayPair(NumDocs.SMALL, "abf0704.shtml.txt", "edo26.shtml.txt");
+        example = new EssayPair(file, "abf0704.shtml.txt", "edo26.shtml.txt");
         System.out.print(example.toString() + " -> ");
         System.out.println(example.getNumCommonPhrases());
 
-        example = new EssayPair(NumDocs.SMALL, "abf0704.shtml.txt", "abf70402.shtml.txt");
+        example = new EssayPair(file, "abf0704.shtml.txt", "abf70402.shtml.txt");
         System.out.print(example.toString() + " -> ");
         System.out.println(example.getNumCommonPhrases());
 
-        example = new EssayPair(NumDocs.SMALL, "abf70402.shtml.txt", "edo26.shtml.txt");
+        example = new EssayPair(file, "abf70402.shtml.txt", "edo26.shtml.txt");
         System.out.print(example.toString() + " -> ");
         System.out.println(example.getNumCommonPhrases());
 
-        example = new EssayPair(NumDocs.SMALL, "abf0704.shtml.txt", "edo20.shtml.txt");
+        example = new EssayPair(file, "abf0704.shtml.txt", "edo20.shtml.txt");
         System.out.print(example.toString() + " -> ");
         System.out.println(example.getNumCommonPhrases());
     }

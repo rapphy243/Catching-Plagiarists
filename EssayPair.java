@@ -1,3 +1,4 @@
+import java.io.File;
 
 /**
  * Write a description of class EssayPair here.
@@ -7,15 +8,15 @@
  */
 public class EssayPair implements Comparable<EssayPair>
 {
-    private NumDocs size;
+    private File folder;
 
     private String path1;
     private String path2;
     
     private int commonPhrases;
 
-    public EssayPair(NumDocs size, String path1, String path2)    {
-        this.size = size;
+    public EssayPair(File folder, String path1, String path2)    {
+        this.folder = folder;
         this.path1 = path1;
         this.path2 = path2;
         try
@@ -40,12 +41,12 @@ public class EssayPair implements Comparable<EssayPair>
 
     public String getFullPath1()
     {
-        return Directories.directoryMap.get(this.size) + "/" + this.path1;
+        return folder.toString() + "\\" + this.path1;
     }
 
     public String getFullPath2()
     {
-        return Directories.directoryMap.get(this.size) + "/" + this.path2;
+        return folder.toString() + "\\" + this.path2;
     }
 
     public int getNumCommonPhrases()
