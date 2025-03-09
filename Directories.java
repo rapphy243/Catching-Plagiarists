@@ -54,13 +54,18 @@ public class Directories
 
     public static void main(String[] args)
     {
-        System.out.println("The available data sets are "); 
-        System.out.println(directoryMap.get(NumDocs.SMALL));
-        directoryLister(NumDocs.SMALL);
-        // System.out.println(getPathOfFileNames(NumDocs.SMALL, getFileNames(NumDocs.SMALL)));
-        System.out.println(directoryMap.get(NumDocs.MEDIUM));
-        directoryLister(NumDocs.MEDIUM);
-        System.out.println(directoryMap.get(NumDocs.LARGE));
-        directoryLister(NumDocs.LARGE);
+        System.out.println("The available data sets are ");
+        NumDocs size = NumDocs.SMALL;
+        System.out.println(directoryMap.get(size));
+        directoryLister(size);
+        // System.out.println(getPathOfFileNames(size, getFileNames(size)));
+        size = NumDocs.MEDIUM;
+        System.out.println(directoryMap.get(size));
+        directoryLister(size);
+        // System.out.println(getPathOfFileNames(size, getFileNames(size)));
+        size = NumDocs.LARGE;
+        System.out.println(directoryMap.get(size));
+        directoryLister(size);
+        // System.out.println(getPathOfFileNames(size, getFileNames(size)));
     }
 }

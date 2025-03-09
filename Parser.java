@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 import java.io.*;
 
 /**
@@ -12,7 +13,27 @@ public class Parser
     public static List<String> parseFile(String path, int numWords) throws FileNotFoundException
     {
         Scanner file = new Scanner(new File(path));
+        // https://stackoverflow.com/questions/203984/how-do-i-remove-repeated-elements-from-arraylist
+        //tldr use a hashset for no duplicates
         ArrayList<String> list = new ArrayList<String>();
+        parseFile(file, list, numWords);
+        file = new Scanner(new File(path));
+        file.next();
+        parseFile(file, list, numWords);
+        file = new Scanner(new File(path));
+        file.next();
+        file.next();
+        parseFile(file, list, numWords);
+        file = new Scanner(new File(path));
+        file.next();
+        file.next();
+        file.next();
+        parseFile(file, list, numWords);
+        return list.stream().distinct().collect(Collectors.toList());
+    }
+    
+    public static void parseFile(Scanner file, List<String> list, int numWords) throws FileNotFoundException
+    {
         while(file.hasNext())
         {
             String phrase = "";
@@ -34,21 +55,29 @@ public class Parser
                 list.add(phrase);
             }
         }
-        return list;
     }
     
-    public static List<String> getCommonPhrases(File file1, File File2)
+    public static List<String> getCommonPhrases(String path1, String path2) throws FileNotFoundException
     {
-        
-        return null;
+        List<String> list1 = parseFile(path1, 4);
+        List<String> list2 = parseFile(path2, 4);
+        // https://stackoverflow.com/questions/5943330/common-elements-in-two-lists
+        list1.retainAll(list2);
+        return list1;
     }
 
     public static void main(String[] args) throws FileNotFoundException
     {
-        String path = Directories.directoryMap.get(NumDocs.SMALL) + "/erk185.shtml.txt";
-        List<String> list = parseFile(path, 4);
+        String path = Directories.directoryMap.get(NumDocs.SMALL);
+        List<String> list = parseFile(path + "/erk185.shtml.txt", 4);
         System.out.println("Example word phrases from: " + path);
-        System.out.println(parseFile(path, 4));
+        System.out.println(parseFile(path + "/erk185.shtml.txt", 4));
         System.out.println("There are " + list.size() + " 4-word phrases.");
+        System.out.println("=================");
+        System.out.println("Testing Examples:");
+        System.out.print("[jrf1109.shtml.txt, sra31.shtml.txt] -> ");
+        System.out.println(getCommonPhrases(path + "/jrf1109.shtml.txt", path + "/sra31.shtml.txt").size());
+        System.out.print("[abf0704.shtml.txt, edo26.shtml.txt] -> ");
+        System.out.println(getCommonPhrases(path + "/abf0704.shtml.txt", path + "/edo26.shtml.txt").size());
     }
 }
