@@ -71,13 +71,13 @@ public class CatchingPlagiaristsGUI
         // https://stackoverflow.com/questions/3382954/measure-execution-time-for-a-java-method
         long start = System.currentTimeMillis();
         
-        EssayGroup group = new EssayGroup(selectedDir, selectedDirFiles, 4);
+        EssayGroup group = new EssayGroup(selectedDir, selectedDirFiles, wordSequence);
 
         double timeToCreate = (double) (System.currentTimeMillis() - start) / 1000.0;
         
         System.out.println(String.format("Creation time took: %4.2f seconds", timeToCreate));
         
-        group.print();
+        group.print(20);
         
     }
 }

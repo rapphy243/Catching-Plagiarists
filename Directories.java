@@ -1,5 +1,5 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 /**
  * This Directories class represents . . .
@@ -28,7 +28,7 @@ public class Directories
         String[] temp = directory.list();
         List<String> files = new ArrayList<String>();
         for(int i = 0; i < temp.length; i++)
-        {
+        {   
             if(temp[i].endsWith(".txt"))
             {
                 files.add(temp[i]);
@@ -59,12 +59,12 @@ public class Directories
         System.out.println(dir);
         directoryLister(dir);
         System.out.println(getPathOfFileNames(dir, getFileNames(dir)));
-        
+
         dir = new File("./Medium number of documents");
         System.out.println(dir);
         directoryLister(dir);
         System.out.println(getPathOfFileNames(dir, getFileNames(dir)));
-        
+
         dir = new File("./Large number of documents");
         System.out.println(dir);
         directoryLister(dir);

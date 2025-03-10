@@ -1,39 +1,104 @@
+import java.io.File;
 import java.util.*;
-import java.io.*;
 
 /**
- * Write a description of class Essay here.
+ * This Essay class represents . . .
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author  (your name)
+ * @version (todays date)
  */
 public class Essay
 {
     private File folder;
-    private String name;
+    private String fileName;
     
-    private Set<String> parse;
+    private int nCount;
+    private Set<String> parsedFile;
     
-    public Essay(File folder, String name, int numWords)
+    public Essay(File folder, String fileName, int nCount)
     {
         this.folder = folder;
-        this.name = name;
+        this.fileName = fileName;
         
-        this.parse = Parser.parseFile(getPath(), numWords);
+        this.nCount = nCount;
+        this.parsedFile = parseFile(getFullPath(), this.nCount);
     }
     
-    public String getName()
+    public String getFullPath()
     {
-        return this.name;
+         return this.folder.toString() + "/" + this.fileName;
     }
     
-    public String getPath()
+    public File getFolder()
     {
-        return this.folder.toString() + "\\" + this.name;
+        return this.folder;
+    }
+    
+    public String getFileName()
+    {
+        return this.fileName;
+    }
+    
+    public int getN()
+    {
+        return this.nCount;
     }
     
     public Set<String> getParse()
     {
-        return this.parse;
+        return this.parsedFile;
+    }
+    
+    private static Set<String> parseFile(String path, int numWords)
+    {
+        Scanner file;
+
+        try {
+            file = new Scanner(new File(path));
+        }
+        catch (java.io.FileNotFoundException fnfe)
+        {
+            System.out.println(path);
+            System.out.println("File path is invalid.");
+            System.out.println("Set will not be instantiated.");
+            return null;
+        }
+        List<String> wordList = new ArrayList<>();
+
+        while (file.hasNext()) 
+        {
+            wordList.add(file.next().replaceAll("[^A-z]", "").toLowerCase());
+        }
+
+        // https://stackoverflow.com/questions/203984/how-do-i-remove-repeated-elements-from-arraylist
+        // tldr use a hashset for no duplicates
+        Set<String> set = new HashSet<>();
+
+        for (int i = 0; i < numWords; i++) 
+        {
+            for (int x = i; x <= wordList.size() - numWords; x += numWords) 
+            {
+                String phrase = "";
+
+                for (int j = 0; j < numWords; j++) 
+                {
+                    phrase += wordList.get(x + j);
+                }
+
+                set.add(phrase);
+            }
+        }
+
+        return set;
+    }
+    
+    public static void main(String[] args)
+    {
+        File folder = new File("./Small number of documents");
+        Essay essay = new Essay(folder, "erk185.shtml.txt", 4);
+        System.out.println("Example word phrases from: " + essay.getFileName());
+        System.out.println("Path to file: " + essay.getFullPath());
+        System.out.println(essay.getParse());
+        System.out.println("There are " + essay.getParse().size() + " 4-word phrases.");
     }
 }
