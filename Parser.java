@@ -42,48 +42,13 @@ public class Parser
         return set;
     }
 
-    public static void parseFile(Set<String> set, Scanner file, int numWords, int skip) throws FileNotFoundException
-    {
-        for (int i = 0; i < skip; i++)
-        {
-            file.next();
-        }
-        while(file.hasNext())
-        {
-            String phrase = "";
-            // read 'numWords' words from file
-            for(int j = 0; j < numWords; j++)
-            {
-                if(file.hasNext())
-                {
-                    // strip away all punctuation, and set to lowercase
-                    phrase += file.next().replaceAll("[^A-z]","").toLowerCase();
-                }
-                else
-                {
-                    phrase = null; // not enough words at end of file
-                }
-            }
-            if (phrase != null)
-            {
-                set.add(phrase);
-            }
-        }
-    }
 
-    public static List<String> compareSets(Set<String> set1, Set<String> set2)
+    public static Set<String> getCommonPhrases(String path1, String path2, int phrases) throws FileNotFoundException
     {
+        Set<String> set1 = parseFile(path1, phrases);
+        Set<String> set2 = parseFile(path2, phrases);
         set1.retainAll(set2);
-        return new ArrayList<String>(List.copyOf(set1));
-    }
-
-    public static List<String> getCommonPhrases(String path1, String path2) throws FileNotFoundException
-    {
-        Set<String> set1 = parseFile(path1, 4);
-
-        Set<String> set2 = parseFile(path2, 4);
-
-        return compareSets(set1,set2);
+        return set1;
     }
 
     public static void main(String[] args) throws FileNotFoundException
@@ -95,23 +60,23 @@ public class Parser
         System.out.println("There are " + list.size() + " 4-word phrases.");
         System.out.println("=================");
         System.out.println("Testing Hardcoded Examples:");
-        EssayPair example = new EssayPair(file, "jrf1109.shtml.txt", "sra31.shtml.txt");
+        EssayPair example = new EssayPair(file, "jrf1109.shtml.txt", "sra31.shtml.txt", 4);
         System.out.print(example.toString() + " -> ");
         System.out.println(example.getNumCommonPhrases());
 
-        example = new EssayPair(file, "abf0704.shtml.txt", "edo26.shtml.txt");
+        example = new EssayPair(file, "abf0704.shtml.txt", "edo26.shtml.txt", 4);
         System.out.print(example.toString() + " -> ");
         System.out.println(example.getNumCommonPhrases());
 
-        example = new EssayPair(file, "abf0704.shtml.txt", "abf70402.shtml.txt");
+        example = new EssayPair(file, "abf0704.shtml.txt", "abf70402.shtml.txt", 4);
         System.out.print(example.toString() + " -> ");
         System.out.println(example.getNumCommonPhrases());
 
-        example = new EssayPair(file, "abf70402.shtml.txt", "edo26.shtml.txt");
+        example = new EssayPair(file, "abf70402.shtml.txt", "edo26.shtml.txt", 4);
         System.out.print(example.toString() + " -> ");
         System.out.println(example.getNumCommonPhrases());
 
-        example = new EssayPair(file, "abf0704.shtml.txt", "edo20.shtml.txt");
+        example = new EssayPair(file, "abf0704.shtml.txt", "edo20.shtml.txt", 4);
         System.out.print(example.toString() + " -> ");
         System.out.println(example.getNumCommonPhrases());
     }

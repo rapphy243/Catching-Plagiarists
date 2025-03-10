@@ -19,7 +19,7 @@ public class EssayGroup
             String tempStr = listOfFiles.get(i);
             for (int x = i + 1; x < listOfFiles.size(); x++)
             {
-                EssayPair pair = new EssayPair(folder, tempStr, listOfFiles.get(x));
+                EssayPair pair = new EssayPair(folder, tempStr, listOfFiles.get(x), 4);
                 this.list.add(pair);
             }
         }
@@ -37,11 +37,11 @@ public class EssayGroup
         }
     }
     
-    public void print(int results)
+    public void print(int topResults)
     {
         System.out.println("=================");
         System.out.println("Printing Examples:");
-        for (int i = 0; i < results; i++)
+        for (int i = 0; i < topResults; i++)
         {
             System.out.print(list.get(i).toString() + " -> ");
             System.out.println(list.get(i).getNumCommonPhrases());
@@ -58,8 +58,8 @@ public class EssayGroup
         //example = new EssayGroup(folder, Directories.getFileNames(folder));
         //example.print();
         
-        //folder = new File("./Large number of documents");
-        //example = new EssayGroup(folder, Directories.getFileNames(folder));
-        //example.print(20);
+        folder = new File("./Large number of documents");
+        example = new EssayGroup(folder, Directories.getFileNames(folder));
+        example.print(20);
     }
 }

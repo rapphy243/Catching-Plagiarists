@@ -23,9 +23,9 @@ public class Directories
         return directories;
     }
 
-    public static List<String> getFileNames(File file)
+    public static List<String> getFileNames(File directory)
     {
-        String[] temp = file.list();
+        String[] temp = directory.list();
         List<String> files = new ArrayList<String>();
         for(int i = 0; i < temp.length; i++)
         {
@@ -42,12 +42,12 @@ public class Directories
         System.out.println(getFileNames(folder));
     }
 
-    public static List<String> getPathOfFileNames(File folder, List<String> files)
+    public static List<String> getPathOfFileNames(File directory, List<String> files)
     {
         List<String> filePaths = new ArrayList<String>();
         for(int i = 0; i < files.size(); i++)
         {
-            filePaths.add(folder + "\\" + files.get(i));
+            filePaths.add(directory + "\\" + files.get(i));
         }
         return filePaths;
     }
@@ -59,10 +59,12 @@ public class Directories
         System.out.println(dir);
         directoryLister(dir);
         System.out.println(getPathOfFileNames(dir, getFileNames(dir)));
+        
         dir = new File("./Medium number of documents");
         System.out.println(dir);
         directoryLister(dir);
         System.out.println(getPathOfFileNames(dir, getFileNames(dir)));
+        
         dir = new File("./Large number of documents");
         System.out.println(dir);
         directoryLister(dir);

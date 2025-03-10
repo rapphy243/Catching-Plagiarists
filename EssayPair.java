@@ -15,13 +15,14 @@ public class EssayPair implements Comparable<EssayPair>
     
     private int commonPhrases;
 
-    public EssayPair(File folder, String path1, String path2)    {
+    public EssayPair(File folder, String path1, String path2, int num)   
+    {
         this.folder = folder;
         this.path1 = path1;
         this.path2 = path2;
         try
         {
-            this.commonPhrases = Parser.getCommonPhrases(getFullPath1(), getFullPath2()).size();
+            this.commonPhrases = Parser.getCommonPhrases(getFullPath1(), getFullPath2(), num).size();
         }
         catch (java.io.FileNotFoundException fnfe)
         {
