@@ -52,14 +52,14 @@ public class EssayGroup
     {
         File folder = new File("./Small number of documents");
         EssayGroup example = new EssayGroup(folder, Directories.getFileNames(folder));
-        //example.print();
+        example.print();
         
         //folder = new File("./Medium number of documents");
         //example = new EssayGroup(folder, Directories.getFileNames(folder));
         //example.print();
         
-        folder = new File("./Large number of documents");
-        example = new EssayGroup(folder, Directories.getFileNames(folder));
-        example.print(20);
+        //folder = new File("./Large number of documents");
+        //example = new EssayGroup(folder, Directories.getFileNames(folder));
+        //example.print(20);
     }
 }
