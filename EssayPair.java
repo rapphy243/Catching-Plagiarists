@@ -54,7 +54,7 @@ public class EssayPair implements Comparable<EssayPair>
     
     public int compareTo(EssayPair other)
     {
-        return this.commonPhraseHits - other.commonPhraseHits();
+        return Integer.compare(this.commonPhraseHits, other.commonPhraseHits());
     }
     
     private int commonPhraseHits()

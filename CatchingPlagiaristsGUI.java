@@ -64,20 +64,20 @@ public class CatchingPlagiaristsGUI
             System.out.println("Not valid number");
         }
         System.out.println("Creating file pairs...");
-        if (size > 70) 
+        if (size > 200) 
         {
             System.out.println("This may take a while.");            
         }
         // https://stackoverflow.com/questions/3382954/measure-execution-time-for-a-java-method
         long start = System.currentTimeMillis();
-        
+
         EssayGroup group = new EssayGroup(selectedDir, selectedDirFiles, wordSequence);
 
         double timeToCreate = (double) (System.currentTimeMillis() - start) / 1000.0;
-        
+
         System.out.println(String.format("Creation time took: %4.2f seconds", timeToCreate));
-        
+
         group.print(20);
-        
+
     }
 }

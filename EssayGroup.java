@@ -16,26 +16,67 @@ public class EssayGroup
         this.list = new ArrayList<EssayPair>();
         
         List<Essay> tempList = new ArrayList<Essay>();
-        for (int i = 0; i < listOfFiles.size(); i++)
+        int size = listOfFiles.size();
+        for (int i = 0; i < size; i++)
         {
             tempList.add(new Essay(folder, listOfFiles.get(i), numWords));
         }
-        
-        for (int i = 0; i < tempList.size(); i++)
+    
+        for (int i = 0; i < size; i++)
         {
             Essay tempEssay = tempList.get(i);
-            for (int x = i + 1; x < tempList.size(); x++)
+            if (i % (size / 10) == 0)
             {
-                if (tempEssay.getFileName().equals("jrf1109.shtml.txt") && tempList.get(x).getFileName().equals("sra31.shtml.txt")) 
-                {
-                    System.out.println();
-                }
+                progress(i, size);
+            }
+            for (int x = i + 1; x < size; x++)
+            {
                 EssayPair pair = new EssayPair(tempEssay, tempList.get(x));
-                this.list.add(pair);
+                if (pair.getCommonPhraseHits() > 0)
+                {
+                    this.list.add(new EssayPair(tempEssay, tempList.get(x)));
+                }
             }
         }
         
-        Collections.sort(this.list, Collections.reverseOrder());
+        //Collections.sort(this.list, Collections.reverseOrder());
+        
+        Collections.sort(this.list);
+        Collections.reverse(this.list);
+    }
+    
+    public EssayGroup(File folder, List<String> listOfFiles, int numWords, int threshold)
+    {
+        this.list = new ArrayList<EssayPair>();
+        
+        List<Essay> tempList = new ArrayList<Essay>();
+        int size = tempList.size();
+        for (int i = 0; i < size; i++)
+        {
+            tempList.add(new Essay(folder, listOfFiles.get(i), numWords));
+        }
+    
+        for (int i = 0; i < size; i++)
+        {
+            Essay tempEssay = tempList.get(i);
+            if (i % (size / 10) == 0)
+            {
+                progress(i, size);
+            }
+            for (int x = i + 1; x < size; x++)
+            {
+                EssayPair pair = new EssayPair(tempEssay, tempList.get(x));
+                if (pair.getCommonPhraseHits() > threshold)
+                {
+                    this.list.add(new EssayPair(tempEssay, tempList.get(x)));
+                }
+            }
+        }
+        
+        //Collections.sort(this.list, Collections.reverseOrder());
+        
+        Collections.sort(this.list);
+        //Collections.reverse(this.list);
     }
     
     public void print()
@@ -59,6 +100,27 @@ public class EssayGroup
             System.out.println(list.get(i).getCommonPhraseHits());
         }
     }
+    
+    public static void progress(int curr, int max) 
+    {
+        int percent = (int) Math.round(100.0 * curr/ max);
+        int numHashes = percent / 2;
+        
+        String bar = "[";
+        for (int i = 0; i < numHashes; i++) 
+        {
+            bar += "#";
+        }
+        
+        while (bar.length() < 50) 
+        {
+            bar += " ";
+        }
+        
+        bar += "] " + percent + "%";
+        System.out.println(bar);
+    }
+    
     public static void main(String[] args)
     {
         File folder = new File("./Small number of documents");
