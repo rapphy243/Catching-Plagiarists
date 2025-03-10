@@ -10,44 +10,38 @@ public class EssayPair implements Comparable<EssayPair>
 {
     private File folder;
 
-    private String path1;
-    private String path2;
+    private Essay essay1;
+    private Essay essay2;
     
     private int commonPhrases;
 
-    public EssayPair(File folder, String path1, String path2, int num)   
+    public EssayPair(File folder, Essay essay1, Essay essay2)   
     {
         this.folder = folder;
-        this.path1 = path1;
-        this.path2 = path2;
-        try
-        {
-            this.commonPhrases = Parser.getCommonPhrases(getFullPath1(), getFullPath2(), num).size();
-        }
-        catch (java.io.FileNotFoundException fnfe)
-        {
-            this.commonPhrases = -1;
-        }
+        this.essay1 = essay1;
+        this.essay2 = essay2;
+        
+        this.commonPhrases = Parser.getCommonPhrases(essay1, essay2).size();
     }
 
-    public String getPath1()
+    public Essay getEssay1()
     {
-        return this.path1;
+        return this.essay1;
     }
 
-    public String getPath2()
+    public Essay getEssay2()
     {
-        return this.path2;
+        return this.essay2;
     }
 
     public String getFullPath1()
     {
-        return folder.toString() + "\\" + this.path1;
+        return essay1.toString();
     }
 
     public String getFullPath2()
     {
-        return folder.toString() + "\\" + this.path2;
+        return essay2.toString();
     }
 
     public int getNumCommonPhrases()
@@ -57,7 +51,7 @@ public class EssayPair implements Comparable<EssayPair>
 
     public String toString()
     {
-        return "[" + path1 + ", " + path2 + "]";
+        return "[" + essay1.getName() + ", " + essay2.getName() + "]";
     }
     
     public int compareTo(EssayPair other)
