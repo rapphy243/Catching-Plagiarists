@@ -9,6 +9,9 @@ import java.util.*;
  */
 public class Essay
 {
+    // Contains folder and fileName of an Essay
+    // holds HashSet of the n-contiguous-word 
+    // sequences for the essay.
     private File folder;
     private String fileName;
     
@@ -66,13 +69,15 @@ public class Essay
             System.out.println("Set will be empty.");
             return set;
         }
+        //Faster implementation of parsing file
+        //Create list full of all the stripped words in the file.
         List<String> wordList = new ArrayList<>();
-
+        
         while (file.hasNext()) 
         {
             wordList.add(file.next().replaceAll("[^A-z]", "").toLowerCase());
         }
-
+        
         for (int i = 0; i < numWords; i++) 
         {
             for (int x = i; x <= wordList.size() - numWords; x += numWords) 

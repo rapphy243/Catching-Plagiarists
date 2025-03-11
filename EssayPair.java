@@ -9,6 +9,9 @@ import java.io.File;
  */
 public class EssayPair implements Comparable<EssayPair>
 {
+    // Holds the 2 essays to be compared.
+    // Compares HashSets and holds amount
+    // of hits found using both HashSets.
     private Essay essay1;
     private Essay essay2;
     

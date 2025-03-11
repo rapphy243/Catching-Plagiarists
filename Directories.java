@@ -9,6 +9,8 @@ import java.util.*;
  */
 public class Directories
 {
+    // Helper methods to navigate present working directory.
+    
     public static List<File> getDirectories()
     {
         File dir = new File(".");

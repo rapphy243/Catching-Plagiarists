@@ -9,6 +9,12 @@ import java.io.File;
  */
 public class EssayGroup
 {
+    // Used in the GUI.
+    // Holds a ArrayList of EssayPairs
+    // Then uses Collections to sort them
+    // in decending order by how many hits 
+    // each pair has.
+    
     List<EssayPair> list;
     
     public EssayGroup(File folder, List<String> listOfFiles, int numWords) // List of file paths

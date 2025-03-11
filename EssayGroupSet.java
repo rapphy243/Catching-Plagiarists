@@ -9,6 +9,13 @@ import java.io.File;
  */
 public class EssayGroupSet
 {
+    // This class is unused in the GUI.
+    // Uses a TreeSet insead of an Array,
+    // which requires no sorting as it is
+    // a sorted collection, but it takes
+    // longer to add all items.
+    
+    
     TreeSet<EssayPair> set;
     
     public EssayGroupSet(File folder, List<String> listOfFiles, int numWords) // List of file paths

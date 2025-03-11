@@ -10,20 +10,21 @@ public class EssayGroupTester
 {
     public static void main(String[] args)
     {
+        // Tests time to create pairs with ./Large number of documents
+        // between EssayGroup (Array) and EssayGroupSet (TreeSet)
         File folder = new File("./Large number of documents");
 
         long startSet = System.currentTimeMillis();
-        EssayGroupSet exampleSet = new EssayGroupSet(folder, Directories.getFileNames(folder), 4);
+        EssayGroupSet exampleSet = new EssayGroupSet(folder, Directories.getFileNames(folder), 20);
         exampleSet.print(5);
         double timeToCreateSet = (double) (System.currentTimeMillis() - startSet) / 1000.0;
         
         long start = System.currentTimeMillis();
-        EssayGroup example = new EssayGroup(folder, Directories.getFileNames(folder), 4, 1);
+        EssayGroup example = new EssayGroup(folder, Directories.getFileNames(folder), 4, 20);
         double timeToCreate = (double) (System.currentTimeMillis() - start) / 1000.0;
         example.print(5);
         System.out.println(String.format("Set Creation time took: %4.2f seconds", timeToCreateSet));
         System.out.println(String.format("Array Creation time took: %4.2f seconds", timeToCreate));
-        
     }
 }
 
