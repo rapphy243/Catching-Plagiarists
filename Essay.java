@@ -49,16 +49,16 @@ public class Essay
         return this.parsedFile;
     }
     
-    private static Set<String> parseFile(String path, int numWords)
+    private static Set<String> parseFile(String fullPath, int numWords)
     {
         Scanner file;
 
         try {
-            file = new Scanner(new File(path));
+            file = new Scanner(new File(fullPath));
         }
         catch (java.io.FileNotFoundException fnfe)
         {
-            System.out.println(path);
+            System.out.println(fullPath);
             System.out.println("File path is invalid.");
             System.out.println("Set will not be instantiated.");
             return null;
