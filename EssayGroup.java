@@ -56,7 +56,7 @@ public class EssayGroup
         this.list = new ArrayList<EssayPair>();
         
         List<Essay> tempList = new ArrayList<Essay>();
-        int size = tempList.size();
+        int size = listOfFiles.size();
         if (size > 200)
         {
             System.out.println("This may take a while.");            
@@ -79,8 +79,8 @@ public class EssayGroup
                 }
             }
         }
-
-        if (size > 200)
+        
+        if (size > 200 && threshold < 5)
         {
             System.out.println("=================");
             System.out.println("Sorting Essay Pairs:");
@@ -92,7 +92,7 @@ public class EssayGroup
     public void print()
     {
         System.out.println("=================");
-        System.out.println("Printing Group:");
+        System.out.println("Printing essay pairs with hits:");
         for (int i = 0; i < list.size(); i++)
         {
             System.out.print(list.get(i).toString() + " -> ");
@@ -108,7 +108,7 @@ public class EssayGroup
             return;
         }
         System.out.println("=================");
-        System.out.println("Printing Group:");
+        System.out.println("Printing first " + topResults + " essay pairs with hits:");
         for (int i = 0; i < topResults; i++)
         {
             System.out.print(list.get(i).toString() + " -> ");
@@ -119,19 +119,19 @@ public class EssayGroup
     public static void progress(int curr, int max) 
     {
         int percent = (int) Math.round(100.0 * curr/ max);
-        int numHashes = percent / 2;
-        
+        int num = percent / 2;
+
         String bar = "[";
-        for (int i = 0; i < numHashes; i++) 
+        for (int i = 0; i < num; i++) 
         {
-            bar += "#";
+            bar += "=";
         }
-        
+
         while (bar.length() < 50) 
         {
             bar += " ";
         }
-        
+
         bar += "] " + percent + "%";
         System.out.println(bar);
     }

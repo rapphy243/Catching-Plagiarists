@@ -11,44 +11,81 @@ public class CatchingPlagiaristsGUI
 {
     public static void main(String[] args)
     {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Catching Plagiarists");
-        System.out.println("Listing directories:");
+        boolean exit = false;
+        while (!exit)
+        {
+            Scanner scanner = new Scanner(System.in);
+            startProgram(scanner);
 
+            System.out.println("================="); 
+            System.out.println("Thank you for using Catching Plagiarists");
+            System.out.print("Enter \"restart\" to restart program or anything else to exit: ");
+
+            String input = scanner.next().toLowerCase();
+            if (!input.equals("restart"))
+            {
+                exit = true;
+            }
+            System.out.print('\u000C'); //Clear screen of text
+        }
+    }
+
+    public static void startProgram(Scanner scanner)
+    {
         List<File> dirList = Directories.getDirectories();
         Collections.sort(dirList, Collections.reverseOrder());
-        for (int i = 0; i < dirList.size(); i++)
-        {
-            System.out.println((i + 1) + ": " + dirList.get(i).toString());
-        }
-        
         int selected;
-        // https://stackoverflow.com/questions/2912817/how-to-use-scanner-to-accept-only-valid-int-as-input
-        while (true)
+        File selectedDir;
+        List<String> selectedDirFiles;
+        while(true)
         {
-            System.out.print("Please select a directory to process (Type number indicated on the side): ");
-            try 
+            System.out.println("Catching Plagiarists");
+            System.out.println("Listing directories:");
+            for (int i = 0; i < dirList.size(); i++)
             {
-                selected = scanner.nextInt();
-                if (selected > 0 && selected <= dirList.size())
-                {
-                    break;
-                }
-            } 
-            catch (Exception InputMismatchException) 
-            {
-                scanner.next();
+                System.out.println((i + 1) + ": " + dirList.get(i).toString());
             }
-            System.out.println("Invalid Number");
+            // https://stackoverflow.com/questions/2912817/how-to-use-scanner-to-accept-only-valid-int-as-input
+            while (true)
+            {
+                System.out.print("Please select a directory to process (Type number indicated on the side): ");
+                try 
+                {
+                    selected = scanner.nextInt();
+                    if (selected > 0 && selected <= dirList.size())
+                    {
+                        break;
+                    }
+                } 
+                catch (Exception InputMismatchException) 
+                {
+                    scanner.next();
+                }
+                System.out.println("Invalid Number");
+            }
+
+            selectedDir = dirList.get(selected - 1);
+            selectedDirFiles = Directories.getFileNames(selectedDir);
+            System.out.println("You selected: " + selectedDir.toString());
+            int size = selectedDirFiles.size();
+            System.out.println("This directory contains " + size + " text files.");
+            if (size > 0)
+            {
+                break;
+            }
+            System.out.println("Please select different directory to process.");
+            try //https://stackoverflow.com/a/24104332
+            {
+                Thread.sleep(2000);
+                System.out.print('\u000C'); //Clear screen of text
+            }
+            catch (InterruptedException ie)
+            {
+                Thread.currentThread().interrupt();
+            }
         }
-        
-        File selectedDir = dirList.get(selected - 1);
-        List<String> selectedDirFiles = Directories.getFileNames(selectedDir);
+
         int wordSequence;
-        System.out.println("You selected: " + selectedDir.toString()); //+ " (" + selected + ")");
-        int size = selectedDirFiles.size();
-        System.out.println("This directory contains " + size + " text files.");
-        
         while (true)
         {
             System.out.print("Please enter the n-contiguous-word sequences you would like: ");
@@ -66,17 +103,33 @@ public class CatchingPlagiaristsGUI
             }
             System.out.println("Not valid number");
         }
-        
-        // https://stackoverflow.com/questions/3382954/measure-execution-time-for-a-java-method
+
+        int numHits;
+        while (true)
+        {
+            System.out.print("Please enter the threshold of hits you would like list: ");
+            try 
+            {
+                numHits = scanner.nextInt();
+                if (numHits >= 0)
+                {
+                    break;
+                }
+            } 
+            catch (Exception InputMismatchException) 
+            {
+                scanner.next();
+            }
+            System.out.println("Not valid number");
+        }
+
+        System.out.print('\u000C'); //Clear screen of text
+
         long start = System.currentTimeMillis();
-
-        EssayGroup group = new EssayGroup(selectedDir, selectedDirFiles, wordSequence);
-
+        EssayGroup group = new EssayGroup(selectedDir, selectedDirFiles, wordSequence, numHits);
         double timeToCreate = (double) (System.currentTimeMillis() - start) / 1000.0;
-
         System.out.println(String.format("Creation time took: %4.2f seconds", timeToCreate));
 
-        group.print(20);
-
+        group.print();
     }
 }
