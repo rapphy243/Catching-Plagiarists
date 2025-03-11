@@ -10,13 +10,18 @@ import java.io.File;
 public class EssayGroupSet
 {
     TreeSet<EssayPair> set;
+    
     public EssayGroupSet(File folder, List<String> listOfFiles, int numWords) // List of file paths
     {
+        System.out.println("Creating file pairs...");
         this.set = new TreeSet<EssayPair>();
         
         List<Essay> tempList = new ArrayList<Essay>();
         int size = listOfFiles.size();
-        
+        if (size > 200)
+        {
+            System.out.println("This may take a while.");            
+        }
         for (int i = 0; i < size; i++)
         {
             tempList.add(new Essay(folder, listOfFiles.get(i), numWords));
@@ -25,28 +30,25 @@ public class EssayGroupSet
         for (int i = 0; i < size; i++)
         {
             Essay tempEssay = tempList.get(i);
-            if (i % (size / 10) == 0)
-            {
-                progress(i, size);
-            }
+            progress(i, size);
             for (int x = i + 1; x < size; x++)
             {
-                EssayPair pair = new EssayPair(tempEssay, tempList.get(x));
-                if (pair.getCommonPhraseHits() >= 0)
-                {
-                    this.set.add(new EssayPair(tempEssay, tempList.get(x)));
-                }
+                this.set.add(new EssayPair(tempEssay, tempList.get(x)));
             }
         }
     }
 
     public EssayGroupSet(File folder, List<String> listOfFiles, int numWords, int threshold)
     {
+        System.out.println("Creating file pairs...");
         this.set = new TreeSet<EssayPair>();
-
-        List<Essay> tempList = new ArrayList<Essay>();
-        int size = tempList.size();
         
+        List<Essay> tempList = new ArrayList<Essay>();
+        int size = listOfFiles.size();
+        if (size > 200)
+        {
+            System.out.println("This may take a while.");            
+        }
         for (int i = 0; i < size; i++)
         {
             tempList.add(new Essay(folder, listOfFiles.get(i), numWords));
@@ -55,25 +57,15 @@ public class EssayGroupSet
         for (int i = 0; i < size; i++)
         {
             Essay tempEssay = tempList.get(i);
-            if (i % (size / 10) == 0)
-            {
-                progress(i, size);
-            }
+            progress(i, size);
             for (int x = i + 1; x < size; x++)
             {
                 EssayPair pair = new EssayPair(tempEssay, tempList.get(x));
                 if (pair.getCommonPhraseHits() >= threshold)
                 {
-                    this.set.add(new EssayPair(tempEssay, tempList.get(x)));
+                    this.set.add(pair);
                 }
             }
-        }
-        progress(size, size);
-        System.out.println("=====================");
-        System.out.println("Sorting Colllection");
-        if (size > 500)
-        {
-            System.out.println("This will take a while.");
         }
     }
 
@@ -92,6 +84,11 @@ public class EssayGroupSet
 
     public void print(int topResults)
     {
+        if (topResults > set.size())
+        {
+            print();
+            return;
+        }
         System.out.println("=====================");
         System.out.println("Printing Essay Group:");
         Iterator<EssayPair> iterator = set.descendingIterator();
@@ -142,7 +139,7 @@ public class EssayGroupSet
 
         folder = new File("./Large number of documents");
         start = System.currentTimeMillis();
-        example = new EssayGroupSet(folder, Directories.getFileNames(folder), 4);
+        example = new EssayGroupSet(folder, Directories.getFileNames(folder), 4, 1);
         timeToCreate = (double) (System.currentTimeMillis() - start) / 1000.0;
         example.print(20);
         System.out.println(String.format("Creation time took: %4.2f seconds", timeToCreate));

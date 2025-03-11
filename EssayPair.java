@@ -65,12 +65,39 @@ public class EssayPair implements Comparable<EssayPair>
             System.out.println("They will not have any common hits.");
             return -1;
         }
-        Set<String> set = new HashSet<String>();
-        // I LOVE VARIABLE REFRENCES
-        set.addAll(essay1.getParse());
-        //
-        set.retainAll(essay2.getParse());
-        return set.size();
+        
+        //The below code was orginally
+        // Set<String> set = new HashSet<String>();
+        // //I LOVE VARIABLE REFRENCES
+        // set.addAll(essay1.getParse());
+        // set.retainAll(essay2.getParse());
+        //return set.size();
+        //However apparently retainAll and addAll create new sets every time, so just doing a simple loop is faster.
+        
+        Set<String> smallerSet; 
+        Set<String> largerSet;
+        
+        if (essay1.getParse().size() < essay2.getParse().size()) 
+        {
+            smallerSet = essay1.getParse();
+            largerSet = essay2.getParse();
+        }
+        else 
+        {
+            smallerSet = essay2.getParse();
+            largerSet = essay1.getParse();
+        }
+        
+        int count = 0;
+        for (String phrase : smallerSet) 
+        {
+            if (largerSet.contains(phrase)) 
+            {
+                count++;
+            }
+        }
+        
+        return count;
     }
     
     public static void main(String[] args)

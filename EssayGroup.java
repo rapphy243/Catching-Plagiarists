@@ -13,10 +13,15 @@ public class EssayGroup
     
     public EssayGroup(File folder, List<String> listOfFiles, int numWords) // List of file paths
     {
+        System.out.println("Creating file pairs...");
         this.list = new ArrayList<EssayPair>();
         
         List<Essay> tempList = new ArrayList<Essay>();
         int size = listOfFiles.size();
+        if (size > 200)
+        {
+            System.out.println("This may take a while.");            
+        }
         for (int i = 0; i < size; i++)
         {
             tempList.add(new Essay(folder, listOfFiles.get(i), numWords));
@@ -25,32 +30,37 @@ public class EssayGroup
         for (int i = 0; i < size; i++)
         {
             Essay tempEssay = tempList.get(i);
-            if (i % (size / 10) == 0)
-            {
-                progress(i, size);
-            }
+            progress(i, size);
             for (int x = i + 1; x < size; x++)
             {
                 EssayPair pair = new EssayPair(tempEssay, tempList.get(x));
                 if (pair.getCommonPhraseHits() >= 0)
                 {
-                    this.list.add(new EssayPair(tempEssay, tempList.get(x)));
+                    this.list.add(pair);
                 }
             }
         }
         
-        //Collections.sort(this.list, Collections.reverseOrder());
-        
-        Collections.sort(this.list);
-        Collections.reverse(this.list);
+        if (size > 200)
+        {
+            System.out.println("=================");
+            System.out.println("Sorting Essay Pairs:");
+            System.out.println("This may take a while.");
+        }
+        Collections.sort(this.list, Collections.reverseOrder());
     }
     
     public EssayGroup(File folder, List<String> listOfFiles, int numWords, int threshold)
     {
+        System.out.println("Creating file pairs...");
         this.list = new ArrayList<EssayPair>();
         
         List<Essay> tempList = new ArrayList<Essay>();
         int size = tempList.size();
+        if (size > 200)
+        {
+            System.out.println("This may take a while.");            
+        }
         for (int i = 0; i < size; i++)
         {
             tempList.add(new Essay(folder, listOfFiles.get(i), numWords));
@@ -59,24 +69,24 @@ public class EssayGroup
         for (int i = 0; i < size; i++)
         {
             Essay tempEssay = tempList.get(i);
-            if (i % (size / 10) == 0)
-            {
-                progress(i, size);
-            }
+            progress(i, size);
             for (int x = i + 1; x < size; x++)
             {
                 EssayPair pair = new EssayPair(tempEssay, tempList.get(x));
                 if (pair.getCommonPhraseHits() >= threshold)
                 {
-                    this.list.add(new EssayPair(tempEssay, tempList.get(x)));
+                    this.list.add(pair);
                 }
             }
         }
-        
-        //Collections.sort(this.list, Collections.reverseOrder());
-        
-        Collections.sort(this.list);
-        //Collections.reverse(this.list);
+
+        if (size > 200)
+        {
+            System.out.println("=================");
+            System.out.println("Sorting Essay Pairs:");
+            System.out.println("This may take a while.");
+        }
+        Collections.sort(this.list, Collections.reverseOrder());
     }
     
     public void print()
@@ -92,6 +102,11 @@ public class EssayGroup
     
     public void print(int topResults)
     {
+        if (topResults > list.size())
+        {
+            print();
+            return;
+        }
         System.out.println("=================");
         System.out.println("Printing Group:");
         for (int i = 0; i < topResults; i++)

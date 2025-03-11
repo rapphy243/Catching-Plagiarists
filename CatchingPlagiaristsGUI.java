@@ -21,6 +21,7 @@ public class CatchingPlagiaristsGUI
         {
             System.out.println((i + 1) + ": " + dirList.get(i).toString());
         }
+        
         int selected;
         // https://stackoverflow.com/questions/2912817/how-to-use-scanner-to-accept-only-valid-int-as-input
         while (true)
@@ -40,12 +41,14 @@ public class CatchingPlagiaristsGUI
             }
             System.out.println("Invalid Number");
         }
+        
         File selectedDir = dirList.get(selected - 1);
         List<String> selectedDirFiles = Directories.getFileNames(selectedDir);
         int wordSequence;
         System.out.println("You selected: " + selectedDir.toString()); //+ " (" + selected + ")");
         int size = selectedDirFiles.size();
         System.out.println("This directory contains " + size + " text files.");
+        
         while (true)
         {
             System.out.print("Please enter the n-contiguous-word sequences you would like: ");
@@ -63,11 +66,7 @@ public class CatchingPlagiaristsGUI
             }
             System.out.println("Not valid number");
         }
-        System.out.println("Creating file pairs...");
-        if (size > 200) 
-        {
-            System.out.println("This may take a while.");            
-        }
+        
         // https://stackoverflow.com/questions/3382954/measure-execution-time-for-a-java-method
         long start = System.currentTimeMillis();
 
