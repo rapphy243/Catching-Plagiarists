@@ -91,7 +91,7 @@ public class Essay
         return set;
     }
     
-    public static void test()
+    public static void main(String[] args)
     {
         File folder = new File("./Small number of documents");
         Essay essay = new Essay(folder, "erk185.shtml.txt", 4);
