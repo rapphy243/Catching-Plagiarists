@@ -52,7 +52,10 @@ public class Essay
     private static Set<String> parseFile(String fullPath, int numWords)
     {
         Scanner file;
-
+        
+        // https://stackoverflow.com/questions/203984/how-do-i-remove-repeated-elements-from-arraylist
+        // tldr use a hashset for no duplicates
+        Set<String> set = new HashSet<>();
         try {
             file = new Scanner(new File(fullPath));
         }
@@ -60,8 +63,8 @@ public class Essay
         {
             System.out.println(fullPath);
             System.out.println("File path is invalid.");
-            System.out.println("Set will not be instantiated.");
-            return null;
+            System.out.println("Set will be empty.");
+            return set;
         }
         List<String> wordList = new ArrayList<>();
 
@@ -69,10 +72,6 @@ public class Essay
         {
             wordList.add(file.next().replaceAll("[^A-z]", "").toLowerCase());
         }
-
-        // https://stackoverflow.com/questions/203984/how-do-i-remove-repeated-elements-from-arraylist
-        // tldr use a hashset for no duplicates
-        Set<String> set = new HashSet<>();
 
         for (int i = 0; i < numWords; i++) 
         {
@@ -92,7 +91,7 @@ public class Essay
         return set;
     }
     
-    public static void main(String[] args)
+    public static void test()
     {
         File folder = new File("./Small number of documents");
         Essay essay = new Essay(folder, "erk185.shtml.txt", 4);

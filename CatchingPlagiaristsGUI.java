@@ -19,7 +19,7 @@ public class CatchingPlagiaristsGUI
 
             System.out.println("================="); 
             System.out.println("Thank you for using Catching Plagiarists");
-            System.out.print("Enter \"restart\" to restart program or anything else to exit: ");
+            System.out.print("Enter \"restart\" to restart program or anything other key to exit: ");
 
             String input = scanner.next().toLowerCase();
             if (!input.equals("restart"))
@@ -28,6 +28,7 @@ public class CatchingPlagiaristsGUI
             }
             System.out.print('\u000C'); //Clear screen of text
         }
+        System.out.print("Exited Catching Plagiarists");
     }
 
     public static void startProgram(Scanner scanner)
@@ -128,8 +129,8 @@ public class CatchingPlagiaristsGUI
         long start = System.currentTimeMillis();
         EssayGroup group = new EssayGroup(selectedDir, selectedDirFiles, wordSequence, numHits);
         double timeToCreate = (double) (System.currentTimeMillis() - start) / 1000.0;
-        System.out.println(String.format("Creation time took: %4.2f seconds", timeToCreate));
-
         group.print();
+        
+        System.out.println(String.format("Creation time took: %4.2f seconds", timeToCreate));
     }
 }
