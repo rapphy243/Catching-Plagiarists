@@ -4,7 +4,7 @@
 
 *   This project is my work for my CS Data Structures class
 *   It solves the Catching Plagiarists problem
-*   Features a terminal GUI to select essays and detect hits
+*   Features a terminal GUI to select essays and detect hits in essay pairs
 
 ## Installation
 
