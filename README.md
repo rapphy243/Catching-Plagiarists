@@ -3,14 +3,14 @@
 ## Description
 
 *   This project is my work for my CS Data Structures class
-*   It solves the Catching Plagiarists problem
+*   It solves the catching plagiarists problem
 *   Features a terminal GUI to select essays and detect hits in essay pairs
 
 ## Installation
 
 *   Git clone or download .ZIP of project files
-*   Open in BlueJ and compile "CatchingPlagiaristsGUI" or compile it yourself
-*   Run CatchingPlagiaristsGUI
+*   Open in BlueJ and compile "CatchingPlagiaristsGUI"
+*   Run main method in CatchingPlagiaristsGUI
 
 ## License
 
