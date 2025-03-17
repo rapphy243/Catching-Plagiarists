@@ -41,6 +41,12 @@ public class CatchingPlagiaristsGUI
         while(true)
         {
             System.out.println("Catching Plagiarists");
+            System.out.println("================="); 
+            System.out.println("This program is designed to take a directory of files");
+            System.out.println("and detect common phrase hits in file pairs. The more");
+            System.out.println("hits a file pair has, the higher the likely for the");
+            System.out.println("two file pairs are to be plagiarized from each other.");
+            System.out.println("================="); 
             System.out.println("Listing directories:");
             for (int i = 0; i < dirList.size(); i++)
             {
