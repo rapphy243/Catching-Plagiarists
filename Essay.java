@@ -73,16 +73,33 @@ public class Essay
         //Create list full of all the stripped words in the file.
         List<String> wordList = new ArrayList<>();
         
+        //Initialize phrase and count variables
+        int count = 0;
+        String phrase = "";
+        //Iterate through the file and add words to the list and phrases to the set
         while (file.hasNext()) 
         {
-            wordList.add(file.next().replaceAll("[^A-z]", "").toLowerCase());
+            String word = file.next().replaceAll("[^A-z]", "").toLowerCase(); // Remove all non-alphabetic characters
+            wordList.add(word); // Add word to list
+            if (count < numWords) // If count is less than numWords, add word to phrase
+            {
+                phrase += word;
+                count++;
+            }
+            else // If count is equal to numWords, add phrase to set and reset phrase and count
+            {
+                set.add(phrase);
+                phrase = "";
+                count = 0;
+            }
         }
         
-        for (int i = 0; i < numWords; i++) 
+        //Loop through the list of words and add other shifted n phrases to the set
+        for (int i = 1; i < numWords; i++) 
         {
             for (int x = i; x <= wordList.size() - numWords; x += numWords) 
             {
-                String phrase = "";
+                phrase = "";
 
                 for (int j = 0; j < numWords; j++) 
                 {
