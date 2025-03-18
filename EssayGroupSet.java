@@ -13,7 +13,7 @@ public class EssayGroupSet
     // Uses a TreeSet insead of an Array,
     // which requires no sorting as it is
     // a sorted collection, but it takes
-    // longer to add all items.
+    // slightly longer to add all items.
     
     
     TreeSet<EssayPair> set;

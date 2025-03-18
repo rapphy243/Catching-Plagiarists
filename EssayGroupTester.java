@@ -20,7 +20,7 @@ public class EssayGroupTester
         double timeToCreateSet = (double) (System.currentTimeMillis() - startSet) / 1000.0;
         
         long start = System.currentTimeMillis();
-        EssayGroup example = new EssayGroup(folder, Directories.getFileNames(folder), 4, 20);
+        EssayGroup example = new EssayGroup(folder, Directories.getFileNames(folder), 20);
         double timeToCreate = (double) (System.currentTimeMillis() - start) / 1000.0;
         example.print(5);
         System.out.println(String.format("Set Creation time took: %4.2f seconds", timeToCreateSet));
