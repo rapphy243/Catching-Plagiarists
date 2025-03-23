@@ -24,7 +24,7 @@ public class Essay
         this.fileName = fileName;
         
         this.nCount = nCount;
-        this.parsedFile = parseFile(getFullPath(), this.nCount);
+        this.parsedFile = this.parseFile(getFullPath(), nCount);
     }
     
     public String getFullPath()
@@ -52,7 +52,7 @@ public class Essay
         return this.parsedFile;
     }
     
-    private static Set<String> parseFile(String fullPath, int numWords)
+    private Set<String> parseFile(String fullPath, int numWords)
     {
         Scanner file;
         
@@ -69,14 +69,16 @@ public class Essay
             System.out.println("Set will be empty.");
             return set;
         }
-        //Faster implementation of parsing file
-        //Create list full of all the stripped words in the file.
+        // Faster implementation of parsing file
+        // Create list full of all the stripped words in the file.
         List<String> wordList = new ArrayList<>();
-        
-        //Initialize phrase and count variables
+
+        // Initialize phrase and count variables to make the first pass of n-contiguous-words
         int count = 0;
         String phrase = "";
-        //Iterate through the file and add words to the list and phrases to the set
+        
+        // Iterate through the file and add words to the list and phrases to the set
+        // While doing this create the first pass of n-contiguous-words for the file
         while (file.hasNext()) 
         {
             String word = file.next().replaceAll("[^A-z]", "").toLowerCase(); // Remove all non-alphabetic characters
@@ -94,10 +96,11 @@ public class Essay
             }
         }
         
-        //Loop through the list of words and add other shifted n phrases to the set
-        for (int i = 1; i < numWords; i++) 
+        // Loop through the list of words and create the rest of the n-contiguous-words
+        // Using sliding window technique https://www.geeksforgeeks.org/window-sliding-technique/
+        for (int i = 1; i < numWords; i++) // Our offset
         {
-            for (int x = i; x <= wordList.size() - numWords; x += numWords) 
+            for (int x = i; x <= wordList.size() - numWords; x += numWords) // Our window
             {
                 phrase = "";
 
@@ -115,6 +118,7 @@ public class Essay
     
     public static void main(String[] args)
     {
+        // Test to check word phrases from step 0
         File folder = new File("./Small number of documents");
         Essay essay = new Essay(folder, "erk185.shtml.txt", 4);
         System.out.println("Example word phrases from: " + essay.getFileName());

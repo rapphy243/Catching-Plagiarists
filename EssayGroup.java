@@ -47,12 +47,6 @@ public class EssayGroup
             }
         }
         
-        if (size > 200)
-        {
-            System.out.println("=================");
-            System.out.println("Sorting Essay Pairs:");
-            System.out.println("This may take a while.");
-        }
         Collections.sort(this.list, Collections.reverseOrder());
     }
     
@@ -85,13 +79,7 @@ public class EssayGroup
                 }
             }
         }
-        
-        if (size > 200 && threshold < 5)
-        {
-            System.out.println("=================");
-            System.out.println("Sorting Essay Pairs:");
-            System.out.println("This may take a while.");
-        }
+
         Collections.sort(this.list, Collections.reverseOrder());
     }
     

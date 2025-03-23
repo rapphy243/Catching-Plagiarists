@@ -9,19 +9,20 @@ import java.io.File;
  */
 public class EssayPair implements Comparable<EssayPair>
 {
-    // Holds the 2 essays to be compared.
+    // Holds the 2 Essays to be compared.
     // Compares HashSets and holds amount
     // of hits found using both HashSets.
     private Essay essay1;
     private Essay essay2;
     
-    int commonPhraseHits;    
+    private int commonPhraseHits;   
+
     public EssayPair(Essay essay1, Essay essay2)
     {
         this.essay1 = essay1;
         this.essay2 = essay2;
         
-        this.commonPhraseHits = commonPhraseHits();
+        this.commonPhraseHits = makeCommonPhraseHits();
     }
     
     public Essay getEssay1()
@@ -57,10 +58,10 @@ public class EssayPair implements Comparable<EssayPair>
     
     public int compareTo(EssayPair other)
     {
-        return Integer.compare(this.commonPhraseHits, other.commonPhraseHits());
+        return Integer.compare(this.commonPhraseHits, other.getCommonPhraseHits());
     }
     
-    private int commonPhraseHits()
+    private int makeCommonPhraseHits()
     {
         if (essay1.getN() != essay2.getN())
         {
@@ -80,7 +81,8 @@ public class EssayPair implements Comparable<EssayPair>
         Set<String> smallerSet; 
         Set<String> largerSet;
         
-        if (essay1.getParse().size() < essay2.getParse().size()) 
+        // Save some time by iterating through the smaller set.
+        if (essay1.getParse().size() < essay2.getParse().size())
         {
             smallerSet = essay1.getParse();
             largerSet = essay2.getParse();
@@ -92,7 +94,7 @@ public class EssayPair implements Comparable<EssayPair>
         }
         
         int count = 0;
-        for (String phrase : smallerSet) 
+        for (String phrase : smallerSet)
         {
             if (largerSet.contains(phrase)) 
             {
@@ -125,6 +127,6 @@ public class EssayPair implements Comparable<EssayPair>
 
         example = new EssayPair(new Essay(folder, "abf0704.shtml.txt", 4), new Essay(folder, "edo20.shtml.txt", 4));
         System.out.print(example.toString() + " -> ");
-        System.out.println(example.commonPhraseHits());
+        System.out.println(example.getCommonPhraseHits());
     }
 }
