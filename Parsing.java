@@ -10,6 +10,10 @@ import java.io.*;
  */
 public class Parsing
 {
+    // Creates a list of all the words in the file
+    // Then uses a (slightly bad) implementation of sliding window to parse words
+    // https://youtu.be/y2d0VHdvfdc?si=5nX0Ueb2XYe6yx90-
+    // https://www.geeksforgeeks.org/window-sliding-technique
     public static Set<String> listParse(String fullPath, int numWords)
     {
         Scanner file;
@@ -28,12 +32,11 @@ public class Parsing
             System.out.println("Set will be empty.");
             return set;
         }
-        // Faster implementation of parsing file
+
         // Create list full of all the stripped words in the file.
         List<String> wordList = new ArrayList<String>();
 
         // Iterate through the file and add words to the list and phrases to the set
-        // While doing this create the first pass of n-contiguous-words for the file
         while (file.hasNext()) 
         {
             String word = file.next().replaceAll("[^A-z]", "").toLowerCase(); // strip away all punctuation, and set to lowercase
@@ -41,7 +44,6 @@ public class Parsing
         }
 
         // Loop through the list of words and create the rest of the n-contiguous-words
-        // Using sliding window technique https://www.geeksforgeeks.org/window-sliding-technique/
         for (int i = 0; i < numWords; i++) // Our offset
         {
             for (int x = i; x <= wordList.size() - numWords; x += numWords) // Our window
@@ -57,7 +59,8 @@ public class Parsing
 
         return set;
     }
-    
+
+    // Uses a queue to create each phrase
     public static Set<String> queueParse(String fullPath, int numWords)
     {
         Scanner file;
@@ -78,7 +81,6 @@ public class Parsing
         }
         // Faster implementation of parsing file
         // Use queue to go through the file once
-
         Queue<String> queue = new LinkedList<String>();
 
         while (file.hasNext()) 
@@ -97,7 +99,7 @@ public class Parsing
                 set.add(phrase); // add phrase to queue
                 queue.remove(); // remove oldest word
             }
-        }                
+        }           
         return set;
     }
 
@@ -122,7 +124,7 @@ public class Parsing
                 System.out.println("Set will be empty.");
                 return set;
             }
-            for (int x = 0; x < i; x++)
+            for (int x = 0; x < i; x++) // Make our offset for each pass
             {
                 file.next();
             }
@@ -154,6 +156,7 @@ public class Parsing
 
     public static void main(String[] args)
     {
+        // Test to make sure each method returns the same size
         String path = "./Small number of documents/erk185.shtml.txt";
         System.out.println("Provided code for parsing size: " + nLoopParse(path,4).size());
         System.out.println("Window code for parsing size: " + listParse(path,4).size());
