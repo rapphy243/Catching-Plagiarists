@@ -96,7 +96,7 @@ public class EssayGroup
     
     public void print(int topResults)
     {
-        if (topResults > list.size())
+        if (topResults > list.size()) // Can't print if > than list size
         {
             print();
             return;
@@ -112,7 +112,7 @@ public class EssayGroup
     
     public static void progress(int curr, int max) 
     {
-        int percent = (int) Math.round(100.0 * curr/ max);
+        int percent = (int) Math.round(100.0 * curr / max);
         int num = percent / 2;
 
         String bar = "[";

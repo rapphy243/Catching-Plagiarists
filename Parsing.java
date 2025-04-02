@@ -10,6 +10,7 @@ import java.io.*;
  */
 public class Parsing
 {
+    // Unused in the main program, first implementation.
     // Creates a list of all the words in the file
     // Then uses a (slightly bad) implementation of sliding window to parse words
     // https://youtu.be/y2d0VHdvfdc?si=5nX0Ueb2XYe6yx90-
@@ -60,7 +61,10 @@ public class Parsing
         return set;
     }
 
+    // Used in main program
     // Uses a queue to create each phrase
+    // Kind of similar to listParse except
+    // it only goes through the file/words once.
     public static Set<String> queueParse(String fullPath, int numWords)
     {
         Scanner file;
@@ -102,7 +106,8 @@ public class Parsing
         }           
         return set;
     }
-
+    
+    // Unused in the main program, used to check if other methods are correct.
     public static Set<String> nLoopParse(String fullPath, int numWords)
     {
         Scanner file;
@@ -159,7 +164,7 @@ public class Parsing
         // Test to make sure each method returns the same size
         String path = "./Small number of documents/erk185.shtml.txt";
         System.out.println("Provided code for parsing size: " + nLoopParse(path,4).size());
-        System.out.println("Window code for parsing size: " + listParse(path,4).size());
+        System.out.println("List code for parsing size: " + listParse(path,4).size());
         System.out.println("Queue code for parsing size: " + queueParse(path,4).size());
     }
 }

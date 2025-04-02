@@ -70,13 +70,12 @@ public class EssayPair implements Comparable<EssayPair>
             return -1;
         }
         
-        //The below code was orginally
-        // Set<String> set = new HashSet<String>();
-        // //I LOVE VARIABLE REFRENCES
-        // set.addAll(essay1.getParse());
-        // set.retainAll(essay2.getParse());
-        //return set.size();
-        //However apparently retainAll and addAll create new sets every time, so just doing a simple loop is faster.
+        // The below code was orginally
+        //// Set<String> set = new HashSet<String>();
+        //// set.addAll(essay1.getParse());
+        //// set.retainAll(essay2.getParse());
+        //// return set.size();
+        // however apparently retainAll and addAll create new sets every time, so just doing a simple loop is faster.
         
         Set<String> smallerSet; 
         Set<String> largerSet;

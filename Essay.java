@@ -24,7 +24,7 @@ public class Essay
         this.fileName = fileName;
 
         this.nCount = nCount;
-        this.parsedFile = Parsing.listParse(getFullPath(), nCount);
+        this.parsedFile = Parsing.queueParse(getFullPath(), nCount);
     }
 
     public String getFullPath()

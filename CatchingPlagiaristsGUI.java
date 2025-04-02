@@ -83,7 +83,7 @@ public class CatchingPlagiaristsGUI
             System.out.println("Please select different directory to process.");
             try //https://stackoverflow.com/a/24104332
             {
-                Thread.sleep(2000);
+                Thread.sleep(1500);
                 System.out.print('\u000C'); //Clear screen of text
             }
             catch (InterruptedException ie)
